@@ -1,0 +1,9 @@
+.container {
+    padding: 10px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+}
+.btn_option {
+    padding: 5px 10px;
+}
