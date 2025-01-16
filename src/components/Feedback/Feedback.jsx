@@ -1,20 +1,22 @@
 import s from './Feedback.module.css'
 
-const Feedback = ({ value, conditionRender }) => {
+const Feedback = ({ value, totalFeedback }) => {
     const keyValue = Object.keys(value);
 
-    if (conditionRender === 0) {
+    if (totalFeedback === 0) {
         return null;
     }
     return (
         <div>
-            {conditionRender && (
-                <ul className={s.list_feedback}>
+            {totalFeedback && (
+            <ul className={s.list_feedback}>
                 {keyValue.map(item => {
                     return <li key={item} className={s.item_list_feedback}>{item}: {value[item]}</li>
                 })}
+                    <li className={s.item_list_feedback}>Total: {totalFeedback}</li> 
+                    <li className={s.item_list_feedback}>Positive: {Math.round((value.Good / totalFeedback) * 100)}%</li>    
             </ul> 
-            )}
+            )};
         </div>
     )
 

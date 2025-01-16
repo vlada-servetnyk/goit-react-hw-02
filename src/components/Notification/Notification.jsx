@@ -1,9 +1,9 @@
 import s from './Notification.module.css'
 
-const Notification = ({ conditionRender }) => {
+const Notification = ({ totalFeedback }) => {
     return (
         <div>
-            {!conditionRender && <p className={s.text}>No feedback yet</p>}
+            {!totalFeedback && <p className={s.text}>No feedback yet</p>}
         </div>
     )
 };

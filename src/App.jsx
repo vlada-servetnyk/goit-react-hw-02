@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import './App.css'
 import Description from './components/Description/Description'
@@ -7,11 +7,25 @@ import Feedback from './components/Feedback/Feedback';
 import Notification from './components/Notification/Notification';
 
 function App() {
-  const [state, setState] = useState({
+  const [state, setState] = useState(() => JSON.parse(localStorage.getItem('state')) ?? {
     Good: 0,
     Neutral: 0,
     Bad: 0
   });
+
+  useEffect(() => {
+    localStorage.setItem('state', JSON.stringify(state));
+  }, [state]);
+    
+
+  const handleReset = () => {
+    setState({
+      ...state,
+      Good: 0,
+      Neutral: 0,
+      Bad: 0
+  })
+  }
 
   const totalFeedback = state.Good + state.Neutral + state.Bad;
 
@@ -43,9 +57,9 @@ function App() {
   return (
     <>
       <Description />
-      <Options value={state} upDate={updateFeedback} />
-      <Notification conditionRender={totalFeedback} />
-      <Feedback value={state} conditionRender={totalFeedback} />
+      <Options value={state} upDate={updateFeedback} btnReset={totalFeedback} handleReset={handleReset} />
+      <Notification totalFeedback={totalFeedback} />
+      <Feedback value={state} totalFeedback={totalFeedback} />
     </>
   )
 }
