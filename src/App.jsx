@@ -8,9 +8,9 @@ import Notification from './components/Notification/Notification';
 
 function App() {
   const [state, setState] = useState(() => JSON.parse(localStorage.getItem('state')) ?? {
-    Good: 0,
-    Neutral: 0,
-    Bad: 0
+    good: 0,
+    neutral: 0,
+    bad: 0
   });
 
   useEffect(() => {
@@ -19,47 +19,40 @@ function App() {
     
 
   const handleReset = () => {
-    setState({
-      ...state,
-      Good: 0,
-      Neutral: 0,
-      Bad: 0
+    setState({   
+      good: 0,
+      neutral: 0,
+      bad: 0
   })
   }
 
-  const totalFeedback = state.Good + state.Neutral + state.Bad;
-
+  const [positiveFeedback, setpositiveFeedback] = useState(0);
+  const totalFeedback = state.good + state.neutral + state.bad;
+  
 
   const updateFeedback = feedbackType => {
-    
-    if (feedbackType.item === 'Good') {
-      setState({
-        ...state,
-        Good: state.Good + 1,
-      })
-    }
-    if (feedbackType.item === 'Neutral') {
-      setState({
-        ...state,
-        Neutral: state.Neutral + 1,
-      })
-    }
-    if (feedbackType.item === 'Bad') {
-      setState({
-        ...state,
-        Bad: state.Bad + 1,
-      })
-    }
-  }
+    setState(prevState => {
+      const updatedState = {
+        ...prevState,
+        [feedbackType]: prevState[feedbackType] + 1,
+      };
 
-  
+      const total = updatedState.good + updatedState.neutral + updatedState.bad;
+      setpositiveFeedback(
+        total ? Math.round((updatedState.good / total) * 100) : 0
+      );
+
+      return updatedState;
+    });
+  };
+
 
   return (
     <>
       <Description />
       <Options value={state} upDate={updateFeedback} btnReset={totalFeedback} handleReset={handleReset} />
       <Notification totalFeedback={totalFeedback} />
-      <Feedback value={state} totalFeedback={totalFeedback} />
+      <Feedback value={state} totalFeedback={totalFeedback} positiveFeedback={positiveFeedback} />
     </>
   )
 }

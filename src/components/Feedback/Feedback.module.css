@@ -14,3 +14,6 @@
 .item_list_feedback {
     color: black;
 }
+.item_list_feedback::first-letter {
+    text-transform: capitalize;
+}

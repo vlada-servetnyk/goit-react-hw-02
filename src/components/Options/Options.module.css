@@ -7,3 +7,6 @@
 .btn_option {
     padding: 5px 10px;
 }
+.btn_option::first-letter {
+    text-transform: capitalize;
+}

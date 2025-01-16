@@ -1,4 +1,4 @@
-import { useState } from 'react';
+
 import s from './Options.module.css'
 
 const Options = ({ value, upDate, btnReset, handleReset }) => {
@@ -9,7 +9,7 @@ const Options = ({ value, upDate, btnReset, handleReset }) => {
     return (
         <div className={s.container}>
             {keyValue.map(item => {
-                return <button onClick={() => upDate({item})} key={item} className={s.btn_option}>{item}</button>
+                return <button onClick={() => upDate(item)} key={item} className={s.btn_option}>{item}</button>
             })}
             {btnReset !== 0 && <button key='reset' onClick={handleReset} className={s.btn_option}>Reset</button>}
         </div>
